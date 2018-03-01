@@ -25,29 +25,6 @@
 <script type="text/javascript">
   export default {
 	name: 'Todo',
-	data() {
-		return {
-			todos:[
-				{
-                    id: 1,
-					title: 'Aprender REACT',
-					project: 'PWA',
-					done: true,
-				},
-				{
-                    id: 2,
-					title: 'Aprender VUE',
-					project: 'PWA',
-					done: false,
-				},
-				{
-                    id: 3,
-					title: 'Aprender VUEX',
-					project: 'PWA',
-					done: false,
-				}
-			],
-		};
-	},
+	props: ['todo'],
 };
 </script>
