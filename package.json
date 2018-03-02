@@ -4,13 +4,16 @@
   "description": "Projeto de Aprendizado",
   "author": "Lucas",
   "private": true,
+  "homepage": "https://github.com/lucascardosossa/TodoApp",
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
     "start": "npm run dev",
-    "build": "node build/build.js"
+    "build": "node build/build.js",
+    "deploy": "node ./node_modules/vue-gh-pages/index.js"
   },
   "dependencies": {
     "vue": "^2.5.2",
+    "vue-gh-pages": "^1.10.2",
     "vue-router": "^3.0.1"
   },
   "devDependencies": {
@@ -54,6 +57,7 @@
     "node": ">= 6.0.0",
     "npm": ">= 3.0.0"
   },
+  
   "browserslist": [
     "> 1%",
     "last 2 versions",
