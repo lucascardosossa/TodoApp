@@ -1,9 +1,9 @@
 <template>
-  
     <div class="ui three column stackable grid">
     	<div class="column">
-    		<h3>Pendentes ({{todos.filter(todo => {return !todo.done }).length}})</h3>
-			<todo v-on:delete-todo="deleteTodo" v-for="todo in todos.filter(todo => {return !todo.done })" :key="todo.id" v-bind:todo="todo"></todo>
+				<h3>Pendentes ({{todos.filter(todo => {return !todo.done }).length}})</h3>
+				<create-todo v-on:add-todo="addTodo"/>
+				<todo v-on:delete-todo="deleteTodo" v-for="todo in todos.filter(todo => {return !todo.done })" :key="todo.id" v-bind:todo="todo"></todo>
     	</div>		
     	<div class="column">
     		<h3>Em Andamento (0)</h3>
@@ -19,11 +19,13 @@
 <script type = "text/javascript" >
 
 import Todo from './Todo';
+import CreateTodo from './CreateTodo';
 
 export default {
   name : 'TodoList',
-  components: {
+  components: { 
     Todo,
+		CreateTodo
   },
   data() {
 		return {
@@ -53,6 +55,13 @@ export default {
     deleteTodo(todo) {
       const todoIndex = this.todos.indexOf(todo);
       this.todos.splice(todoIndex, 1);
+    },
+		addTodo(payload) {
+      this.todos.push({
+        title: payload.title,
+				project: payload.project,
+        done: false,
+      });
     },
   },
 

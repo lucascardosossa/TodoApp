@@ -2,7 +2,10 @@
   <div class="hello">
     <h1>{{ titulo }}</h1>
     <h2>{{ subTitulo }}</h2>
+    <a href="/#/TodoList">Lista de Tarefas</a>
+    <a href="/#/CreateTodo">Nova Tarefa</a>
   </div>
+  
 </template>
 
 <script>
