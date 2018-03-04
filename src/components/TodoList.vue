@@ -3,14 +3,14 @@
     <div class="ui three column stackable grid">
     	<div class="column">
     		<h3>Pendentes ({{todos.filter(todo => {return !todo.done }).length}})</h3>
-			<todo  v-for="todo in todos.filter(todo => {return !todo.done })" :key="todo.id" v-bind:todo="todo"></todo>
+			<todo v-on:delete-todo="deleteTodo" v-for="todo in todos.filter(todo => {return !todo.done })" :key="todo.id" v-bind:todo="todo"></todo>
     	</div>		
     	<div class="column">
     		<h3>Em Andamento (0)</h3>
     	</div>
 		<div class="column">
     		<h3>Finalizadas ({{todos.filter(todo => {return todo.done  }).length}})</h3>
-    		<todo  v-for="todo in todos.filter(todo => {return todo.done })" :key="todo.id" v-bind:todo="todo"></todo>
+    		<todo v-on:delete-todo="deleteTodo"  v-for="todo in todos.filter(todo => {return todo.done })" :key="todo.id" v-bind:todo="todo"></todo>
     	</div>
     </div>
     
@@ -49,6 +49,13 @@ export default {
 			],
 		};
 	},
+	methods: {
+    deleteTodo(todo) {
+      const todoIndex = this.todos.indexOf(todo);
+      this.todos.splice(todoIndex, 1);
+    },
+  },
+
 };
 
 </script>
