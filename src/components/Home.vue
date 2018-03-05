@@ -1,16 +1,15 @@
 <template>
-  <div class="hello">
+  <div class="home">
     <h1>{{ titulo }}</h1>
     <h2>{{ subTitulo }}</h2>
-    <a href="/#/TodoList">Lista de Tarefas</a>
-    <a href="/#/CreateTodo">Nova Tarefa</a>
+    <a class="ui primary button" href="/#/TodoList">Lista de Tarefas</a>
   </div>
   
 </template>
 
 <script>
 export default {
-  name: 'HelloWorld',
+  name: 'Home',
   data () {
     return {
       titulo: 'Bem vindo ao Todo VUE',

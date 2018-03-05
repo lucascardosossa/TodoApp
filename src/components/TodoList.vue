@@ -6,11 +6,12 @@
 				<todo v-on:delete-todo="deleteTodo" v-on:complete-todo="completeTodo" v-for="todo in todos.filter(todo => {return !todo.done })" :key="todo.id" v-bind:todo="todo"></todo>
     	</div>		
     	<div class="column">
-    		<h3>Em Andamento (0)</h3>
+    		<h3>Em Andamento ({{todos.filter(todo => {return todo.done == 1 }).length}})</h3>
+				<todo v-on:delete-todo="deleteTodo" v-on:complete-todo="completeTodo" v-for="todo in todos.filter(todo => {return todo.done == 1 })" :key="todo.id" v-bind:todo="todo"></todo>
     	</div>
 		<div class="column">
-    		<h3>Finalizadas ({{todos.filter(todo => {return todo.done  }).length}})</h3>
-    		<todo v-on:delete-todo="deleteTodo"  v-for="todo in todos.filter(todo => {return todo.done })" :key="todo.id" v-bind:todo="todo"></todo>
+    		<h3>Finalizadas ({{todos.filter(todo => {return todo.done == 2 }).length}})</h3>
+    		<todo v-on:delete-todo="deleteTodo"  v-for="todo in todos.filter(todo => {return todo.done == 2 })" :key="todo.id" v-bind:todo="todo"></todo>
     	</div>
     </div>
     
@@ -31,22 +32,22 @@ export default {
 		return {
 			todos:[
 				{
-                    id: 1,
+          id: 1,
 					title: 'Aprender REACT',
 					project: 'PWA',
-					done: true,
+					done: 1,
 				},
 				{
-                    id: 2,
+          id: 2,
 					title: 'Aprender VUE',
 					project: 'PWA',
-					done: false,
+					done: 0,
 				},
 				{
-                    id: 3,
+          id: 3,
 					title: 'Aprender VUEX',
 					project: 'PWA',
-					done: false,
+					done: 2,
 				}
 			],
 		};
@@ -60,12 +61,12 @@ export default {
       this.todos.push({
         title: payload.title,
 				project: payload.project,
-        done: false,
+        done: payload.done,
       });
     },
 		completeTodo(todo) {
       const todoIndex = this.todos.indexOf(todo);
-      this.todos[todoIndex].done = true;
+      this.todos[todoIndex].done += 1;
     },
   },
 

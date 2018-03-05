@@ -14,11 +14,11 @@
             <label>Projeto</label>
             <input type='text' v-model="project" ref='project' defaultValue="">
           </div>
-          <div class='ui two button attached buttons'>
-            <button style="margin-right: 5px" class='ui basic blue button' v-on:click="sendForm()">
+          <div class='ui buttons'>
+            <button style="margin-right: 5px" class='ui primary button' v-on:click="sendForm()">
               Salvar
             </button>
-            <button class='ui basic red button' v-on:click="closeForm">
+            <button class='ui button' v-on:click="closeForm">
               Cancelar
             </button>
           </div>
@@ -51,7 +51,7 @@ export default {
         this.$emit('add-todo', { 
           title,
           project,
-          done: false,
+          done: 0,
         });
         this.newTodoText = '';
       }
