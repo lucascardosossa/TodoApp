@@ -2,7 +2,7 @@
   <div class="home">
     <h1>{{ titulo }}</h1>
     <h2>{{ subTitulo }}</h2>
-    <a class="ui primary button" href="/#/TodoList">Lista de Tarefas</a>
+    <a class="ui primary button" href="/TodoApp/#/TodoList">Lista de Tarefas</a>
   </div>
   
 </template>
