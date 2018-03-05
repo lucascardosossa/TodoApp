@@ -3,7 +3,7 @@
     	<div class="column">
 				<h3>Pendentes ({{todos.filter(todo => {return !todo.done }).length}})</h3>
 				<create-todo v-on:add-todo="addTodo"/>
-				<todo v-on:delete-todo="deleteTodo" v-for="todo in todos.filter(todo => {return !todo.done })" :key="todo.id" v-bind:todo="todo"></todo>
+				<todo v-on:delete-todo="deleteTodo" v-on:complete-todo="completeTodo" v-for="todo in todos.filter(todo => {return !todo.done })" :key="todo.id" v-bind:todo="todo"></todo>
     	</div>		
     	<div class="column">
     		<h3>Em Andamento (0)</h3>
@@ -62,6 +62,10 @@ export default {
 				project: payload.project,
         done: false,
       });
+    },
+		completeTodo(todo) {
+      const todoIndex = this.todos.indexOf(todo);
+      this.todos[todoIndex].done = true;
     },
   },
 

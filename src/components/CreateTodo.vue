@@ -7,19 +7,19 @@
       <div class='content'>
         <div class='ui form'>
           <div class='field'>
-            <label>Title</label>
+            <label>Titulo</label>
             <input v-model="title" type='text' ref='title' defaultValue="">
           </div>
           <div class='field'>
-            <label>Project</label>
+            <label>Projeto</label>
             <input type='text' v-model="project" ref='project' defaultValue="">
           </div>
           <div class='ui two button attached buttons'>
             <button style="margin-right: 5px" class='ui basic blue button' v-on:click="sendForm()">
-              Create
+              Salvar
             </button>
             <button class='ui basic red button' v-on:click="closeForm">
-              Cancel
+              Cancelar
             </button>
           </div>
         </div>

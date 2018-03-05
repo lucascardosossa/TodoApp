@@ -19,25 +19,25 @@
     <div class="content" v-show="isEditing">
       <div class='ui form'>
         <div class='field'>
-          <label>Title</label>
+          <label>Titulo</label>
           <input type='text' v-model="todo.title" >
         </div>
         <div class='field'>
-          <label>Project</label>
+          <label>Projeto</label>
           <input type='text' v-model="todo.project" >
         </div>
         <div class='ui two button attached buttons'>
           <button class='ui basic blue button' v-on:click="hideForm">
-            Close X
+            Fechar
           </button>
         </div>
       </div>
     </div>
     <div class='ui bottom attached green basic button' v-show="!isEditing &&todo.done" disabled>
-        Completed
+        Finalizado
     </div>
-    <div class='ui bottom attached red basic button' v-show="!isEditing && !todo.done">
-        Pending
+    <div class='ui bottom attached red basic button' v-on:click="completeTodo(todo)" v-show="!isEditing && !todo.done">
+        Pendente
     </div>
   </div>
 </template>
@@ -60,6 +60,9 @@ export default {
     },
     deleteTodo(todo) {
       this.$emit('delete-todo', todo);
+    },
+    completeTodo(todo) {
+        this.$emit('complete-todo', todo);
     },
   },
 };
