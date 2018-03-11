@@ -12,7 +12,7 @@
           </div>
           <div class='field'>
             <label>Projeto</label>
-            <input type='text' v-model="project" ref='project' defaultValue="">
+            <input type='text' id="projeto" ref='project' defaultValue="">
           </div>
           <div class='ui buttons'>
             <button style="margin-right: 5px" class='ui primary button' v-on:click="sendForm()">
@@ -29,6 +29,7 @@
 </template>
 
 <script>
+
 export default {
   data() {
     return {
@@ -45,6 +46,7 @@ export default {
       this.isCreating = false;
     },
     sendForm() {
+      this.project = this.$refs.project.value;
       if (this.title.length > 0 && this.project.length > 0) {
         const title = this.title;
         const project = this.project;
@@ -59,4 +61,21 @@ export default {
     },
   },
 };
+  $( function() {
+    var responseData = [];
+    $( "#projeto" ).autocomplete({
+      source: function( request, response ) {
+        $.ajax( {
+          url: "http://localhost:5000/api/project/byName/" + request.term,
+          success: function( data ) {
+            $.each(data, function(i, item) {
+                responseData.push({"label": data[i].name, "value": data[i].name});
+            });
+            response(responseData);
+          }
+        } );
+      },
+      minLength: 2
+    } );
+  });
 </script>
