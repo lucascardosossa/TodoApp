@@ -20,15 +20,18 @@
       <div class='ui form'>
         <div class='field'>
           <label>Titulo</label>
-          <input type='text' v-model="todo.title" >
+          <input type='text' ref="title" >
         </div>
         <div class='field'>
           <label>Projeto</label>
-          <input type='text' v-model="todo.project" >
+          <input type='text' ref="project">
         </div>
-        <div class='ui two button attached buttons'>
-          <button class='ui basic blue button' v-on:click="hideForm">
-            Fechar
+        <div class='ui buttons'>
+          <button class='ui primary button' v-on:click="editTask">
+            Salvar
+          </button>
+          <button class="ui button" v-on:click="hideForm">
+            Cancelar
           </button>
         </div>
       </div>
@@ -55,14 +58,45 @@ export default {
     };
   },
   methods: {
+    editTask(){
+      swal({
+        title: "Editar",
+        text: "Deseja confirmar as modificaçoes?",
+        icon: "info",
+        buttons: true,
+      })
+      .then((result) => {
+        if(result){
+          this.todo.title = this.$refs.title.value;
+          this.todo.project = this.$refs.project.value;
+          swal("Sucesso!", "Tarefa modificada.", "success");
+          this.hideForm();
+        }
+      });
+
+    },
     showForm() {
       this.isEditing = true;
+      this.$refs.title.value = this.todo.title;
+      this.$refs.project.value = this.todo.project;
     },
     hideForm() {
       this.isEditing = false;
     },
     deleteTodo(todo) {
-      this.$emit('delete-todo', todo);
+      swal({
+        title: "Remover",
+        text: "Deseja remover esta tarefa?",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true
+      })
+      .then((result) => {
+        if(result){
+          this.$emit('delete-todo', todo);
+          swal("Sucesso!", "Tarefa removida.", "success");
+        }
+      });
     },
     completeTodo(todo) {
         this.$emit('complete-todo', todo);

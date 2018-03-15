@@ -29,13 +29,12 @@
 </template>
 
 <script>
-
 export default {
   data() {
     return {
-      title: '',
-      project: '',
-      isCreating: false,
+      title: "",
+      project: "",
+      isCreating: false
     };
   },
   methods: {
@@ -50,32 +49,33 @@ export default {
       if (this.title.length > 0 && this.project.length > 0) {
         const title = this.title;
         const project = this.project;
-        this.$emit('add-todo', { 
+        this.$emit("add-todo", {
           title,
           project,
-          done: 0,
+          done: 0
         });
-        this.newTodoText = '';
+        this.newTodoText = "";
       }
       this.isCreating = false;
-    },
-  },
+      swal("Sucesso!", "Tarefa criada.", "success");
+    }
+  }
 };
-  $( function() {
-    var responseData = [];
-    $( "#projeto" ).autocomplete({
-      source: function( request, response ) {
-        $.ajax( {
-          url: "http://localhost:5000/api/project/byName/" + request.term,
-          success: function( data ) {
-            $.each(data, function(i, item) {
-                responseData.push({"label": data[i].name, "value": data[i].name});
-            });
-            response(responseData);
-          }
-        } );
-      },
-      minLength: 2
-    } );
+$(function() {
+  var responseData = [];
+  $("#projeto").autocomplete({
+    source: function(request, response) {
+      $.ajax({
+        url: "http://localhost:5000/api/project/byName/" + request.term,
+        success: function(data) {
+          $.each(data, function(i, item) {
+            responseData.push({ label: data[i].name, value: data[i].name });
+          });
+          response(responseData);
+        }
+      });
+    },
+    minLength: 2
   });
+});
 </script>

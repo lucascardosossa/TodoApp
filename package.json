@@ -12,6 +12,7 @@
     "deploy": "node ./node_modules/vue-gh-pages/index.js"
   },
   "dependencies": {
+    "sweetalert": "^2.1.0",
     "vue": "^2.5.2",
     "vue-gh-pages": "^1.10.2",
     "vue-router": "^3.0.1"
@@ -57,7 +58,6 @@
     "node": ">= 6.0.0",
     "npm": ">= 3.0.0"
   },
-  
   "browserslist": [
     "> 1%",
     "last 2 versions",
