@@ -1,25 +1,57 @@
 import Vue from 'vue'  
 import Vuex from 'Vuex'
+import TodoService from '@/api/todoService'
+import { stat } from 'fs';
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({  
     state: {
-      todos: {
-        id: '',
-        title: '',
-        project: '',
-        done: ''
-      }
+      todos: []
     },
     mutations: {
-      addTodo (state, obj) {
-        state.todos = obj
+      getTodo (state, payload) {
+        state.todos = payload
+      },
+      addTodo(state,payload){
+          state.todos.push(payload)
+      },
+      removeTodo(state,payload){
+          const index = state.todos.indexOf(payload)
+          state.todos.splice(index,1)
+      },
+      completeTodo(state,payload){
+          const index = state.todos.indexOf(payload)
+          state.todos[index].done += 1
       }
+
+    },
+    getters: {
+        pendingTodo: state => {
+            return state.todos.filter(todo => !todo.done )
+        },
+        progressTodo: state => {
+            return state.todos.filter(todo => todo.done == 1)
+        },
+        doneTodo: state => {
+            return state.todos.filter(todo => todo.done == 2)
+        }
+
     },
     actions:{
-        addTodo(context){
-            context.commit('addTodo')
+        getTodo(context){
+            TodoService.getTodo(todos => {
+                context.commit('getTodo', todos)
+            })
+        },
+        addTodo({commit},todo){
+            commit('addTodo',todo)
+        },
+        removeTodo({commit}, todo){
+            commit('removeTodo',todo)
+        },
+        completeTodo({commit}, todo){
+            commit('completeTodo',todo)
         }
     }
   })
