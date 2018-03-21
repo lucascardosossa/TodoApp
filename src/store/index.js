@@ -16,6 +16,10 @@ export default new Vuex.Store({
       addTodo(state,payload){
           state.todos.push(payload)
       },
+      editTodo(state,payload){
+          var modifiedTodo = state.todos.find(t => t.id === payload.id)
+          modifiedTodo = payload
+      },
       removeTodo(state,payload){
           const index = state.todos.indexOf(payload)
           state.todos.splice(index,1)
@@ -46,6 +50,9 @@ export default new Vuex.Store({
         },
         addTodo({commit},todo){
             commit('addTodo',todo)
+        },
+        editTodo({commit},todo){
+            commit('editTodo',todo)
         },
         removeTodo({commit}, todo){
             commit('removeTodo',todo)
