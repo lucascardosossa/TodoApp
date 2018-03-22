@@ -49,12 +49,13 @@ export default {
       if (this.title.length > 0 && this.project.length > 0) {
         const title = this.title;
         const project = this.project;
-        this.$emit("add-todo", {
+        this.$store.dispatch("addTodo", {
           title,
           project,
           done: 0
         });
-        this.newTodoText = "";
+        this.title = "";
+        this.$refs.project.value = ""
       }
       this.isCreating = false;
       swal("Sucesso!", "Tarefa criada.", "success");

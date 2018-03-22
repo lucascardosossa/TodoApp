@@ -69,6 +69,7 @@ export default {
         if(result){
           this.todo.title = this.$refs.title.value;
           this.todo.project = this.$refs.project.value;
+          this.$store.dispatch('editTodo',this.todo)
           swal("Sucesso!", "Tarefa modificada.", "success");
           this.hideForm();
         }

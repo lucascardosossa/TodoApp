@@ -1,17 +1,17 @@
 <template>
     <div class="ui three column stackable grid">
     	<div class="column">
-				<h3>Pendentes ({{todos.filter(todo => {return !todo.done }).length}})</h3>
-				<create-todo v-on:add-todo="addTodo"/>
-				<todo v-on:delete-todo="deleteTodo" v-on:complete-todo="completeTodo" v-for="todo in todos.filter(todo => {return !todo.done })" :key="todo.id" v-bind:todo="todo"></todo>
+				<h3>Pendentes ({{pendingTodo.length}})</h3>
+				<create-todo />
+				<todo v-on:delete-todo="deleteTodo" v-on:complete-todo="completeTodo" v-for="todo in pendingTodo" :key="todo.id" v-bind:todo="todo"></todo>
     	</div>		
     	<div class="column">
-    		<h3>Em Andamento ({{todos.filter(todo => {return todo.done == 1 }).length}})</h3>
-				<todo v-on:delete-todo="deleteTodo" v-on:complete-todo="completeTodo" v-for="todo in todos.filter(todo => {return todo.done == 1 })" :key="todo.id" v-bind:todo="todo"></todo>
+    		<h3>Em Andamento ({{progressTodo.length}})</h3>
+				<todo v-on:delete-todo="deleteTodo" v-on:complete-todo="completeTodo" v-for="todo in progressTodo" :key="todo.id" v-bind:todo="todo"></todo>
     	</div>
 		<div class="column">
-    		<h3>Finalizadas ({{todos.filter(todo => {return todo.done == 2 }).length}})</h3>
-    		<todo v-on:delete-todo="deleteTodo"  v-for="todo in todos.filter(todo => {return todo.done == 2 })" :key="todo.id" v-bind:todo="todo"></todo>
+    		<h3>Finalizadas ({{doneTodo.length}})</h3>
+    		<todo v-on:delete-todo="deleteTodo"  v-for="todo in doneTodo" :key="todo.id" v-bind:todo="todo"></todo>
     	</div>
     </div>
     
@@ -19,8 +19,8 @@
 
 <script type = "text/javascript" >
 
-import Todo from './Todo';
-import CreateTodo from './CreateTodo';
+import Todo from './Todo'
+import CreateTodo from './CreateTodo'
 
 export default {
   name : 'TodoList',
@@ -28,45 +28,29 @@ export default {
     Todo,
 		CreateTodo
   },
-  data() {
-		return {
-			todos:[
-				{
-          id: 1,
-					title: 'Aprender REACT',
-					project: 'PWA',
-					done: 1,
-				},
-				{
-          id: 2,
-					title: 'Aprender VUE',
-					project: 'PWA',
-					done: 0,
-				},
-				{
-          id: 3,
-					title: 'Aprender VUEX',
-					project: 'PWA',
-					done: 2,
-				}
-			],
-		};
+  computed : {
+		todos(){
+			return this.$store.state.todos; 
+		},
+		pendingTodo(){
+			return this.$store.getters.pendingTodo;
+		},
+		progressTodo(){
+			return this.$store.getters.progressTodo;
+		},
+		doneTodo(){
+			return this.$store.getters.doneTodo;
+		}
+	},
+	created() {
+		this.$store.dispatch('getTodo')
 	},
 	methods: {
     deleteTodo(todo) {
-      const todoIndex = this.todos.indexOf(todo);
-      this.todos.splice(todoIndex, 1);
-    },
-		addTodo(payload) {
-      this.todos.push({
-        title: payload.title,
-				project: payload.project,
-        done: payload.done,
-      });
+      this.$store.dispatch('removeTodo',todo)
     },
 		completeTodo(todo) {
-      const todoIndex = this.todos.indexOf(todo);
-      this.todos[todoIndex].done += 1;
+      this.$store.dispatch('completeTodo',todo)
     },
   },
 
