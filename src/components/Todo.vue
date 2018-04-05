@@ -5,7 +5,7 @@
             {{ todo.title }}
         </div>
         <div class='meta'>
-            {{ todo.project }}
+            {{ todo.description }}
         </div>
         <div class='ui right floated main menu'>
             <a data-content="Edit This Page" class='bug popup icon item' v-on:click="showForm">
@@ -23,8 +23,8 @@
           <input type='text' ref="title" >
         </div>
         <div class='field'>
-          <label>Projeto</label>
-          <input type='text' ref="project">
+          <label>Descrição</label>
+          <input type='text' ref="description">
         </div>
         <div class='ui buttons'>
           <button class='ui primary button' v-on:click="editTask">
@@ -36,13 +36,13 @@
         </div>
       </div>
     </div>
-    <div class='ui bottom attached green basic button' v-show="!isEditing && todo.done == 2" disabled>
+    <div class='ui bottom attached green basic button' v-show="!isEditing && todo.status == 2" disabled>
         Finalizado
     </div>
-    <div class='ui bottom attached blue basic button' v-on:click="completeTodo(todo)" v-show="!isEditing && todo.done == 1" disabled>
+    <div class='ui bottom attached blue basic button' v-on:click="completeTodo(todo)" v-show="!isEditing && todo.status == 1" disabled>
         Andamento
     </div>
-    <div class='ui bottom attached red basic button' v-on:click="completeTodo(todo)" v-show="!isEditing && !todo.done">
+    <div class='ui bottom attached red basic button' v-on:click="completeTodo(todo)" v-show="!isEditing && !todo.status">
         Pendente
     </div>
   </div>
@@ -68,7 +68,7 @@ export default {
       .then((result) => {
         if(result){
           this.todo.title = this.$refs.title.value;
-          this.todo.project = this.$refs.project.value;
+          this.todo.description = this.$refs.description.value;
           this.$store.dispatch('editTodo',this.todo)
           swal("Sucesso!", "Tarefa modificada.", "success");
           this.hideForm();
@@ -79,7 +79,7 @@ export default {
     showForm() {
       this.isEditing = true;
       this.$refs.title.value = this.todo.title;
-      this.$refs.project.value = this.todo.project;
+      this.$refs.description.value = this.todo.description;
     },
     hideForm() {
       this.isEditing = false;

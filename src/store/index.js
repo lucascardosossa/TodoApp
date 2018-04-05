@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'Vuex'
 import TodoService from '@/api/todoService'
 import { stat } from 'fs';
+import axios from "axios";
 
 Vue.use(Vuex)
 
@@ -26,27 +27,27 @@ export default new Vuex.Store({
       },
       completeTodo(state,payload){
           const index = state.todos.indexOf(payload)
-          state.todos[index].done += 1
+          state.todos[index].status += 1
       }
 
     },
     getters: {
         pendingTodo: state => {
-            return state.todos.filter(todo => !todo.done )
+            return state.todos.filter(todo => !todo.status )
         },
         progressTodo: state => {
-            return state.todos.filter(todo => todo.done == 1)
+            return state.todos.filter(todo => todo.status == 1)
         },
         doneTodo: state => {
-            return state.todos.filter(todo => todo.done == 2)
+            return state.todos.filter(todo => todo.status == 2)
         }
 
     },
     actions:{
-        getTodo(context){
-            TodoService.getTodo(todos => {
-                context.commit('getTodo', todos)
-            })
+        getTodo({commit}){
+            axios.get("http://localhost:5000/api/todo").then(response => {
+                commit('getTodo', response.data.data)
+            });
         },
         addTodo({commit},todo){
             commit('addTodo',todo)

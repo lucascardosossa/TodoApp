@@ -12,6 +12,7 @@
     "deploy": "node ./node_modules/vue-gh-pages/index.js"
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "sweetalert": "^2.1.0",
     "vue": "^2.5.2",
     "vue-gh-pages": "^1.10.2",
