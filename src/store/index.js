@@ -6,7 +6,9 @@ import axios from "axios";
 
 Vue.use(Vuex)
 
-export default new Vuex.Store({  
+const url = "http://localhost:5000/api/todo"
+export default new Vuex.Store({ 
+   
     state: {
       todos: []
     },
@@ -45,18 +47,24 @@ export default new Vuex.Store({
     },
     actions:{
         getTodo({commit}){
-            axios.get("http://localhost:5000/api/todo").then(response => {
+            axios.get(url).then(response => {
                 commit('getTodo', response.data.data)
             });
         },
         addTodo({commit},todo){
-            commit('addTodo',todo)
+            axios.post(url,todo).then(response => {
+                commit('addTodo', todo)
+            });
         },
         editTodo({commit},todo){
-            commit('editTodo',todo)
+            axios.put(url,todo).then(response => {
+                commit('editTodo',todo)
+            });
         },
         removeTodo({commit}, todo){
-            commit('removeTodo',todo)
+            axios.delete(url + "/" + todo.todoId).then(response => {
+                commit('removeTodo',todo)
+            });
         },
         completeTodo({commit}, todo){
             commit('completeTodo',todo)

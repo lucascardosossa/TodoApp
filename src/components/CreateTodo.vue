@@ -11,8 +11,8 @@
             <input v-model="title" type='text' ref='title' defaultValue="">
           </div>
           <div class='field'>
-            <label>Projeto</label>
-            <input type='text' id="projeto" ref='project' defaultValue="">
+            <label>Descrição</label>
+            <input type='text' id="description" ref='description' defaultValue="">
           </div>
           <div class='ui buttons'>
             <button style="margin-right: 5px" class='ui primary button' v-on:click="sendForm()">
@@ -33,7 +33,7 @@ export default {
   data() {
     return {
       title: "",
-      project: "",
+      description: "",
       isCreating: false
     };
   },
@@ -45,38 +45,21 @@ export default {
       this.isCreating = false;
     },
     sendForm() {
-      this.project = this.$refs.project.value;
-      if (this.title.length > 0 && this.project.length > 0) {
+      this.description = this.$refs.description.value;
+      if (this.title.length > 0 && this.description.length > 0) {
         const title = this.title;
-        const project = this.project;
+        const description = this.description;
         this.$store.dispatch("addTodo", {
           title,
-          project,
-          done: 0
+          description,
+          status: 0
         });
         this.title = "";
-        this.$refs.project.value = ""
+        this.$refs.description.value = ""
       }
       this.isCreating = false;
       swal("Sucesso!", "Tarefa criada.", "success");
     }
   }
 };
-$(function() {
-  var responseData = [];
-  $("#projeto").autocomplete({
-    source: function(request, response) {
-      $.ajax({
-        url: "http://localhost:5000/api/project/byName/" + request.term,
-        success: function(data) {
-          $.each(data, function(i, item) {
-            responseData.push({ label: data[i].name, value: data[i].name });
-          });
-          response(responseData);
-        }
-      });
-    },
-    minLength: 2
-  });
-});
 </script>
